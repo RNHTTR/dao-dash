@@ -1,4 +1,6 @@
 # dao-dash
+> NOTE: Doing this mostly off of memory and looking back through command history and what not. Not guaranteed to work yet.
+
 ## TODOs
 * Use cron to automatically refresh on some cadence that the user can set
     * eventually create some kind of interface for manual database refresh
@@ -13,6 +15,14 @@
 ### Pre-Requisites
 * Install Docker, Docker Compose, Python 3.9+ (pyenv), SQLAlchemy
 ### Postgres
+#### Install Postgres for MacOS
+1. `brew install postgresql`
+2. `brew services start postgres`
+3. `createdb dao-dashboard`
+
+#### Load data from Covalent into postgres db
+1. Update `demo_pull_covalent.py` with API key
+2. `python demo_pull_covalent.py`
 > NOTE: Changed port from default 5432 to 5433 because the docker compose yaml for superset has a database deployed to 5432. This change probably isn't necessary -- I was trying to connect to localhost from Docker. Updating the connection string to use `host.docker.internal` instead of `localhost` fixed the connection issue.
 ### Superset
 ```bash

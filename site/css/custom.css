@@ -2,6 +2,10 @@ header, main, footer {
     padding-left: 300px;
 }
 
+ul li a:hover {
+    text-decoration: underline;   
+}
+
 @media only screen and (max-width : 992px) {
     header, main, footer {
         padding-left: 0;

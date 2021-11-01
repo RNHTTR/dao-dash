@@ -4,8 +4,8 @@
       <!--Import Google Icon Font-->
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->
-      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-      <link type="text/css" rel="stylesheet" href="css/custom.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="/static/css/materialize.min.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="/static/css/custom.css"  media="screen,projection"/>
 
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -72,19 +72,19 @@
               <p>Click a refresh icon below to pull fresh data using the Covalent API</p>
               <ul class="collection">
                 <li class="collection-item">
-                  <div>All data<a onclick="M.toast({html: 'Refreshing all data...'})" href="#!" class="secondary-content"><i class="material-icons">refresh</i></a></div>
+                  <div>All data<a onclick="refresh('all')" href="#!" class="secondary-content"><i class="material-icons">refresh</i></a></div>
                 </li>
                 <li class="collection-item">
-                  <div>Chart 1<a href="#!" onclick="M.toast({html: 'Refreshing Chart 1...'})" class="secondary-content"><i class="material-icons">refresh</i></a></div>
+                  <div>Chart 1<a href="#!" onclick="refresh('chart1')" class="secondary-content"><i class="material-icons">refresh</i></a></div>
                 </li>
                 <li class="collection-item">
-                  <div>Chart 2<a href="#!" onclick="M.toast({html: 'Refreshing Chart 2...'})" class="secondary-content"><i class="material-icons">refresh</i></a></div>
+                  <div>Chart 2<a href="#!" onclick="refresh('chart2')" class="secondary-content"><i class="material-icons">refresh</i></a></div>
                 </li>
                 <li class="collection-item">
-                  <div>Chart 3<a href="#!" onclick="M.toast({html: 'Refreshing Chart 3...'})" class="secondary-content"><i class="material-icons">refresh</i></a></div>
+                  <div>Chart 3<a href="#!" onclick="refresh('chart3')" class="secondary-content"><i class="material-icons">refresh</i></a></div>
                 </li>
                 <li class="collection-item">
-                  <div>Chart 4<a href="#!" onclick="M.toast({html: 'Refreshing Chart 4...'})" class="secondary-content"><i class="material-icons">refresh</i></a></div>
+                  <div>Chart 4<a href="#!" onclick="refresh('chart4')" class="secondary-content"><i class="material-icons">refresh</i></a></div>
                 </li>
               </ul>
             </div>
@@ -102,9 +102,8 @@
       <footer>
 
       </footer>
-      <!--JavaScript at end of body for optimized loading-->
-      <script type="text/javascript" src="js/materialize.min.js"></script>
-      <!-- <script type="text/javascript" src="js/dropdown.js"></script> -->
-      <script type="text/javascript" src="js/modal.js"></script>
+      <script type="text/javascript" src="/static/js/materialize.min.js"></script>
+      <script type="text/javascript" src="/static/js/modal.js"></script>
+      <script type="text/javascript" src="/static/js/refresh.js"></script>
     </body>
   </html>

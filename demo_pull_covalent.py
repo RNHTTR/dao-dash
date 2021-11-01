@@ -1,36 +1,50 @@
 import requests
 from sqlalchemy import *
+import sqlalchemy
+import constants
+from util import json_parse, get_db_engine
+from db_setup import *
 
-ens = "maker.eth"
-base_url = "https://api.covalenthq.com"
-chain_id = 1
-address = "maker.eth"
-historical_value_endpoint = f"v1/{chain_id}/address/{address}/portfolio_v2"
-auth_query = "?&key=######"
-url = f"{base_url}/{historical_value_endpoint}/{auth_query}"
-response = requests.get(url)
 
-historical_price_data = response.json()['items'][0]['holdings']
-price_history = []
-for day in historical_price_data:
-    price_history.append({"day": day['timestamp'], "quote_rate": day['quote_rate']})
+def build_historical_value_endpoint(chain_id, address):
+    return f'{constants.COVALENT_BASE_URL}/{constants.COVALENT_API_VERSION}/{chain_id}/address/{address}/portfolio_v2'
 
-metadata = MetaData()
 
-historical_price = Table(
-	"historical_price",
-	metadata,
-	Column("day", DateTime, primary_key=True),
-	Column("quote_rate", Float)
-)
+def build_price_history(historical_price_data):
+    return [{"day": day['timestamp'], "quote_rate": day['quote_rate']}
+            for day in historical_price_data]
 
-# connection_string = "postgresql+psycopg2://<root mac user>@localhost:5433/dao-dashboard"
-# connection_string = "postgresql+psycopg2://user:password@:5433/dao-dashboard"
-connection_string = "postgresql+psycopg2://dashboard@localhost:5432/dao-dashboard" # <-- This doesn't work yet. Need to figure out how to create user/role
 
-engine = create_engine(connection_string)
+def insert_data_into_table(conn, metadata, table_name, data):
+    table = metadata.tables[table_name]
+    try:
+        conn.execute(table.insert(), data)
+    except sqlalchemy.exc.IntegrityError:
+        # TODO Update this
+        print('Primary key already exists')
 
-conn = engine.connect()
-conn.execute(historical_price.insert(), price_history)
-result = conn.execute(text("select * from historical_price"))
-result.fetchone()
+
+def main():
+    historical_value_endpoint = build_historical_value_endpoint(
+        constants.CHAIN_ID, constants.ADDRESS)
+    auth_query = "?&key=#####"
+
+    full_url = f"{historical_value_endpoint}/{auth_query}"
+    json_response = requests.get(full_url).json()
+
+    historical_price_data = json_parse(
+        json_response, ['items', '0', 'holdings'])
+
+    price_history = build_price_history(historical_price_data)
+
+    # TODO externalize db params
+    engine = get_db_engine("db_connection_string")
+
+    conn = engine.connect()
+    metadata = MetaData(bind=conn)
+    metadata.reflect(extend_existing=True)
+
+    insert_data_into_table(conn, metadata, 'historical_price', price_history)
+
+
+main()

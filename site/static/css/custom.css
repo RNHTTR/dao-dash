@@ -1,0 +1,21 @@
+header, main, footer {
+    padding-left: 100px;
+}
+
+ul li a:hover {
+    text-decoration: underline;   
+}
+
+logo {
+    margin-right: 100 !important;
+}
+
+.sidenav {
+    width: 100px !important;
+}
+
+@media only screen and (max-width : 992px) {
+    header, main, footer {
+        padding-left: 0;
+    }
+}

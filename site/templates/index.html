@@ -8,11 +8,9 @@
     <title>DAO Dash</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon.png">
-    <!-- Pignose Calender -->
-    <!-- <link href="/static/plugins/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet"> -->
-    <!-- Chartist -->
-    <!-- <link rel="stylesheet" href="/static/plugins/chartist/css/chartist.min.css">
-    <link rel="stylesheet" href="/static/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css"> -->
+    
+    <!-- toastr -->
+    <link href="/static/plugins/toastr/css/toastr.min.css" rel="stylesheet">
     <!-- Custom Stylesheet -->
     <link href="/static/css/style.css" rel="stylesheet">
 
@@ -69,6 +67,17 @@
                         <span class="toggle-icon"><i class="icon-menu"></i></span>
                     </div>
                 </div>
+                <div class="header-right padding-15">
+                    <ul class="clearfix">
+                        <li class="">
+                            <a href="https://makerdao.com/en/" target="_blank">
+                                <div>
+                                    <img src="/static/images/dao/makerdao.png"  width="40" alt="">
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <!--**********************************
@@ -87,12 +96,23 @@
                             <i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="#"><i class="icon-refresh menu-icon"></i>Refresh</a></li>
+                            <li><a href="#" onclick="refresh()"><i class="icon-refresh menu-icon"></i>Refresh</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#" aria-expanded="false">
-                            <i class="icon-graph menu-icon"></i><span class="nav-text">Explore in Superset &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-external-link"></i></span>
+                        <a href="#" aria-expanded="false" data-toggle="modal" data-target="#toSupersetIntermediaryModal">
+                            <i class="icon-graph menu-icon"></i><span class="nav-text">Explore in Superset &nbsp;<i class="fa fa-external-link stick-right"></i></span>
+                        </a>
+                    </li>
+                    <li class="nav-label">About</li>
+                    <li>
+                        <a href="https://github.com/rnhttr/dao-dash" aria-expanded="false" target="_blank">
+                            <i class="fa fa-github"></i><span class="nav-text">DAO Dash GitHub &nbsp;<i class="fa fa-external-link stick-right"></i></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" aria-expanded="false" data-toggle="modal" data-target="#aboutModal">
+                            <i class="icon-info menu-icon"></i><span class="nav-text">About</span>
                         </a>
                     </li>
                 </ul>
@@ -114,7 +134,7 @@
                             <div class="card-body">
                                 <h3 class="card-title text-white">Token Price ($)</h3>
                                 <div class="d-inline-block">
-                                    <h2 class="text-white">1.0001</h2>
+                                    <h2 id="tokenPrice" class="text-white">1.0001</h2>
                                     <!-- <p class="text-white mb-0">TODO: Date</p> -->
                                 </div>
                                 <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
@@ -126,7 +146,7 @@
                             <div class="card-body">
                                 <h3 class="card-title text-white">Number of Token Holders</h3>
                                 <div class="d-inline-block">
-                                    <h2 class="text-white">15551</h2>
+                                    <h2 id="tokenHolders" class="text-white">15551</h2>
                                     <!-- <p class="text-white mb-0">TODO: Date</p> -->
                                 </div>
                                 <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
@@ -185,8 +205,51 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
+
+
+                <!--**********************************
+                    Modals start
+                ***********************************-->
+                <div class="modal fade" id="toSupersetIntermediaryModal">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">HEADS UP!</h5>
+                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>We've created a read-only Superset user for demonstration purposes. Use the below username and password to log into Superset.</p>
+                                <ul>
+                                    <li>username: TODO</li>
+                                    <li>password: TODO</li>
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="http://34.150.243.200:8088" target="_blank"><button type="button" class="btn btn-primary">Continue to Superset</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="aboutModal">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">About DAO Dash</h5>
+                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>DAO Dash is an open source template for DAOs to use to create analytical dashboards. DAO Dash is not affiliated with MakerDAO; this website is for demonstration purposes only.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--**********************************
+                    Modals end
+                ***********************************-->
 
                 
             <!-- #/ container -->
@@ -215,30 +278,12 @@
     <script src="/static/plugins/common/common.min.js"></script>
     <script src="/static/js/custom.min.js"></script>
     <script src="/static/js/settings.js"></script>
-    <script src="/static/js/gleek.js"></script>
-    <script src="/static/js/styleSwitcher.js"></script>
-
-    <!-- Chartjs -->
-    <!-- <script src="/static/plugins/chart.js/Chart.bundle.min.js"></script> -->
-    <!-- Circle progress -->
-    <script src="/static/plugins/circle-progress/circle-progress.min.js"></script>
-    <!-- Datamap -->
-    <!-- <script src="/static/plugins/d3v3/index.js"></script> -->
-    <!-- <script src="/static/plugins/topojson/topojson.min.js"></script> -->
-    <!-- <script src="/static/plugins/datamaps/datamaps.world.min.js"></script> -->
-    <!-- Morrisjs -->
-    <!-- <script src="/static/plugins/raphael/raphael.min.js"></script> -->
-    <!-- <script src="/static/plugins/morris/morris.min.js"></script> -->
-    <!-- Pignose Calender -->
-    <!-- <script src="/static/plugins/moment/moment.min.js"></script> -->
-    <!-- <script src="/static/plugins/pg-calendar/js/pignose.calendar.min.js"></script> -->
-    <!-- ChartistJS -->
-    <!-- <script src="/static/plugins/chartist/js/chartist.min.js"></script> -->
-    <!-- <script src="/static/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script> -->
-
-
-
-    <script src="/static/js/dashboard/dashboard-1.js"></script>
+    <script src="/static/js/layoutSettings.js"></script>
+    <!-- <script src="/static/js/styleSwitcher.js"></script> -->
+    <script src="/static/js/refresh.js"></script>
+    
+    <!-- Toastr -->
+    <script src="/static/plugins/toastr/js/toastr.min.js"></script>
 
 </body>
 

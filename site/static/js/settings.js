@@ -1,7 +1,7 @@
 const body = $('body');
 const html = $('html');
 
-function quixSettings({version, layout, navheaderBg, headerBg, sidebarStyle, sidebarBg, sidebarPosition, headerPosition, containerLayout, direction}) {
+function daodashSettings({version, layout, navheaderBg, headerBg, sidebarStyle, sidebarBg, sidebarPosition, headerPosition, containerLayout, direction}) {
     this.version = version || "light";
     this.layout = layout || "vertical";
     this.navheaderBg = navheaderBg || "color_1";
@@ -27,7 +27,7 @@ function quixSettings({version, layout, navheaderBg, headerBg, sidebarStyle, sid
 
 }
 
-quixSettings.prototype.manageVersion = function() {
+daodashSettings.prototype.manageVersion = function() {
     switch(this.version) {
         case "light": 
             body.attr("data-theme-version", "light");
@@ -40,7 +40,7 @@ quixSettings.prototype.manageVersion = function() {
     }
 }
 
-quixSettings.prototype.manageLayout = function() {
+daodashSettings.prototype.manageLayout = function() {
     switch(this.layout) {
         case "horizontal": 
             this.sidebarStyle === "overlay" ? body.attr("data-sidebar-style", "full") : body.attr("data-sidebar-style", `${this.sidebarStyle}`);
@@ -54,7 +54,7 @@ quixSettings.prototype.manageLayout = function() {
     }
 }
 
-quixSettings.prototype.manageNavHeaderBg = function() {
+daodashSettings.prototype.manageNavHeaderBg = function() {
     switch(this.navheaderBg) {
         case "color_1": 
             body.attr("data-nav-headerbg", "color_1");
@@ -91,7 +91,7 @@ quixSettings.prototype.manageNavHeaderBg = function() {
     }
 }
 
-quixSettings.prototype.manageHeaderBg = function() {
+daodashSettings.prototype.manageHeaderBg = function() {
     switch(this.headerBg) {
         case "color_1": 
             body.attr("data-headerbg", "color_1");
@@ -128,7 +128,7 @@ quixSettings.prototype.manageHeaderBg = function() {
     }
 }
 
-quixSettings.prototype.manageSidebarStyle = function() {
+daodashSettings.prototype.manageSidebarStyle = function() {
     switch(this.sidebarStyle) {
         case "full":
             body.attr("data-sidebar-style", "full");
@@ -147,7 +147,7 @@ quixSettings.prototype.manageSidebarStyle = function() {
     }
 }
 
-quixSettings.prototype.manageSidebarBg = function() {
+daodashSettings.prototype.manageSidebarBg = function() {
     switch(this.sidebarBg) {
         case "color_1": 
             body.attr("data-sibebarbg", "color_1");
@@ -184,7 +184,7 @@ quixSettings.prototype.manageSidebarBg = function() {
     }
 }
 
-quixSettings.prototype.manageSidebarPosition = function() {
+daodashSettings.prototype.manageSidebarPosition = function() {
     switch(this.sidebarPosition) {
         case "fixed": 
             this.sidebarStyle === "overlay" && this.layout === "vertical" ? body.attr("data-sidebar-position", "static") : body.attr("data-sidebar-position", "fixed");
@@ -197,7 +197,7 @@ quixSettings.prototype.manageSidebarPosition = function() {
     }
 }
 
-quixSettings.prototype.manageHeaderPosition = function() {
+daodashSettings.prototype.manageHeaderPosition = function() {
     switch(this.headerPosition) {
         case "fixed": 
             body.attr("data-header-position", "fixed");
@@ -210,7 +210,7 @@ quixSettings.prototype.manageHeaderPosition = function() {
     }
 }
 
-quixSettings.prototype.manageContainerLayout = function() {
+daodashSettings.prototype.manageContainerLayout = function() {
     switch(this.containerLayout) {
         case "boxed":
             if(this.layout === "vertical" && this.sidebarStyle === "full") {
@@ -226,7 +226,7 @@ quixSettings.prototype.manageContainerLayout = function() {
     }
 }
 
-quixSettings.prototype.manageRtlLayout = function() {
+daodashSettings.prototype.manageRtlLayout = function() {
     switch(this.direction) {
         case "rtl":
             html.attr("dir", "rtl");
@@ -244,7 +244,7 @@ quixSettings.prototype.manageRtlLayout = function() {
     }
 }
 
-quixSettings.prototype.manageResponsiveSidebar = function() {
+daodashSettings.prototype.manageResponsiveSidebar = function() {
     const innerWidth = $(window).innerWidth();
     if(innerWidth < 1200) {
         body.attr("data-layout", "vertical");

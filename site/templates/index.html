@@ -8,9 +8,7 @@
     <title>DAO Dash</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon.png">
-    
-    <!-- toastr -->
-    <link href="/static/plugins/toastr/css/toastr.min.css" rel="stylesheet">
+
     <!-- Custom Stylesheet -->
     <link href="/static/css/style.css" rel="stylesheet">
 
@@ -134,8 +132,7 @@
                             <div class="card-body">
                                 <h3 class="card-title text-white">Token Price ($)</h3>
                                 <div class="d-inline-block">
-                                    <h2 id="tokenPrice" class="text-white">1.0001</h2>
-                                    <!-- <p class="text-white mb-0">TODO: Date</p> -->
+                                    <h2 id="tokenPrice" class="text-white"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i></h2>
                                 </div>
                                 <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
                             </div>
@@ -146,8 +143,7 @@
                             <div class="card-body">
                                 <h3 class="card-title text-white">Number of Token Holders</h3>
                                 <div class="d-inline-block">
-                                    <h2 id="tokenHolders" class="text-white">15551</h2>
-                                    <!-- <p class="text-white mb-0">TODO: Date</p> -->
+                                    <h2 id="tokenHolders" class="text-white"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i></h2>
                                 </div>
                                 <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
                             </div>
@@ -161,14 +157,14 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body pb-0 d-flex justify-content-between">
-                                        <div>
+                                        <!-- <div>
                                             <h4 class="mb-1">Token Price</h4>
                                             <p>Last 30 Days</p>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="card-body">
                                         <div class="video-container">
-                                            <iframe src="https://www.youtube.com/embed/Q8TXgCzxEnw?rel=0" allowfullscreen="" width="853" height="480" frameborder="0"></iframe>
+                                            <iframe src="http://34.150.243.200:8088/superset/dashboard/1/?standalone=true" allowfullscreen="" width="853" height="480" frameborder="0"></iframe>
                                         </div>
                                     </div>
                                 </div>
@@ -281,9 +277,6 @@
     <script src="/static/js/layoutSettings.js"></script>
     <!-- <script src="/static/js/styleSwitcher.js"></script> -->
     <script src="/static/js/refresh.js"></script>
-    
-    <!-- Toastr -->
-    <script src="/static/plugins/toastr/js/toastr.min.js"></script>
 
 </body>
 

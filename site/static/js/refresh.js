@@ -21,7 +21,7 @@ const refresh = async (cache) => {
 
 const refreshTokenPrice = async () => {
     document.getElementById("tokenPrice").innerHTML = '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>'
-    const response = await fetch('http://127.0.0.1:5000/refresh/token_price', {
+    const response = await fetch('http://192.168.2.9:5000/refresh/token_price', {
         method: 'POST',
         body: "",
     })
@@ -38,7 +38,7 @@ const refreshTokenPrice = async () => {
 
 const refreshTokenHolders = async () => {
     document.getElementById("tokenHolders").innerHTML = '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>'
-    const response = await fetch('http://127.0.0.1:5000/refresh/token_holders', {
+    const response = await fetch('http://192.168.2.9:5000/refresh/token_holders', {
         method: 'POST',
         body: "",
     })

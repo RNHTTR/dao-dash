@@ -7,12 +7,9 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 DAO_ADDRESS = os.getenv("DAO_ADDRESS")
-DAO_ADDRESS = "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2"
 SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI")
 API_KEY = os.getenv("API_KEY")
-API_KEY = "ckey_f17f2cba6bad472a97955f7b7da"
 CHAIN_ID = os.getenv("CHAIN_ID")
-CHAIN_ID = 1
 
 BASE_URL = f"https://api.covalenthq.com/v1/{CHAIN_ID}"
 AUTH_QUERY = f"?&key={API_KEY}"
@@ -42,10 +39,26 @@ def refresh(query):
             try:
                 historical_price_data = response.json()["items"][0]["holdings"]
             except JSONDecodeError:
+                print(response.json())
                 return {
                     "code": 500,
                     "token_price": "Error querying API. Try again with Dashboard -> Refresh"
                 }
+            
+            # TODO: Connect to postgres
+            try:
+                HistoricalPrice.query.delete()
+                for item in historical_price_data:
+                    record = HistoricalPrice(
+                        day=item["timestamp"],
+                        quote_rate=item["quote_rate"]
+                    )
+                    db.session.add(record)
+                db.session.commit()
+                print("Price data successfully refreshed")
+            except:
+                db.session.rollback()
+
             quote_rate = historical_price_data[0]["quote_rate"]
             print(f"QUOTE RATE: {quote_rate}")
             return {
@@ -64,21 +77,10 @@ def refresh(query):
                 "code": 200,
                 "token_holders": token_holders
             }
-        # return _corsify_actual_response(jsonify(response=200))
     else:
         raise RuntimeError(
             f"Unknown method: {request.method}"
         )
-
-    # # TODO: Convert to flask_sqlalchemy & insert
-    # price_history = []
-    # for day_data in historical_price_data:
-    #     # price_history.append({"day": day_data['timestamp'], "quote_rate": day['quote_rate']})
-    #     db.session.add(HistoricalPrice(
-    #         day=day_data['timestamp'],
-    #         quote_rate=day_data['quote_rate']
-    #     ))
-    # db.session.commit()
 
 
 def _build_cors_preflight_response():
@@ -88,10 +90,6 @@ def _build_cors_preflight_response():
     response.headers.add('Access-Control-Allow-Methods', "*")
     return response
 
-# def _corsify_actual_response(response):
-#     response.headers.add("Access-Control-Allow-Origin", "*")
-#     return response
-
 
 @app.route('/')
 def index():
@@ -99,4 +97,4 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0")

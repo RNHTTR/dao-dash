@@ -1,37 +1,54 @@
-const refresh = async (charts) => {
-    let chartMessage = ""
-    switch (charts) {
-      case "all":
-        chartMessage += "all data";
-        break
-      case "chart1":
-        chartMessage += "Chart 1";
-        break
-      case "chart2":
-        chartMessage += "Chart 2";
-        break
-      case "chart3":
-        chartMessage += "Chart 3";
-        break
-      case "chart4":
-        chartMessage += "Chart 4";
-        break
-    }
-    M.toast({html: `Attempting to refresh ${chartMessage}...`})
+window.onload = function() {
+    refresh(cache=true);
+    console.log("refreshing...")
+  };
 
-    const response = await fetch('http://127.0.0.1:5000/refresh', {
-      method: 'POST',
-      body: JSON.stringify({"charts": charts}),
-      headers: {
-        'Content-Type': 'application/json'
-      }
+const refresh = async (cache) => {
+    if (cache) {
+        console.log("refreshing!")
+        let tokenPrice = sessionStorage.getItem("tokenPrice");
+        let tokenHolders = sessionStorage.getItem("tokenHolders");
+        console.log(tokenPrice)
+        if ( tokenPrice && tokenHolders ) {
+            document.getElementById("tokenPrice").innerHTML = sessionStorage.getItem("tokenPrice");
+            document.getElementById("tokenHolders").innerHTML = sessionStorage.getItem("tokenHolders");
+            return
+        }
+    }
+    refreshTokenPrice()
+    refreshTokenHolders()
+}
+
+const refreshTokenPrice = async () => {
+    document.getElementById("tokenPrice").innerHTML = '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>'
+    const response = await fetch('http://192.168.2.9:5000/refresh/token_price', {
+        method: 'POST',
+        body: "",
     })
     if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-      M.toast({html: 'Data refreshed!'})
+        const data = await response.json();
+        console.log(data);
+        document.getElementById("tokenPrice").innerHTML = data["token_price"];
+        sessionStorage.setItem("tokenPrice", data["token_price"]);
     } else {
-      M.toast({html: 'Oops!'});
-      console.log(response);
+        document.getElementById("tokenPrice").innerHTML = "Error querying API. Try again with Dashboard -> Refresh"
+        console.log(response);
     }
-  }
+}
+
+const refreshTokenHolders = async () => {
+    document.getElementById("tokenHolders").innerHTML = '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>'
+    const response = await fetch('http://192.168.2.9:5000/refresh/token_holders', {
+        method: 'POST',
+        body: "",
+    })
+    if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        document.getElementById("tokenHolders").innerHTML = data["token_holders"];
+        sessionStorage.setItem("tokenHolders", data["token_holders"]);
+    } else {
+        document.getElementById("tokenHolders").innerHTML = "Error querying API. Try again with Dashboard -> Refresh"
+        console.log(response);
+    }
+}

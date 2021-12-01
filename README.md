@@ -1,9 +1,6 @@
 # DAO Dash
 DAO Dash is a free and open source template built on top of the [Covalent API](https://www.covalenthq.com/) designed to make it simple and straightforward for decentralized autonomous organizations (DAOs) to create dashboards for their key KPIs.
 
-## Demo
-A live DAO Dash demo can be found at [here](http://34.73.228.17:5000/).
-
 ## Setup
 > TODO: Eventually this should just all be done in with docker & docker-compose for a single click deployment
 
